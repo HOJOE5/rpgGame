@@ -61,26 +61,32 @@ class Game {
   void battle() {
     Monster monster = getRandomMonster();
     print('\n⚔️ 새로운 전투 시작!');
-    monster.showStatus();
+    monster.checkAndIncreaseDefense();
 
     while (character.hp > 0 && monster.hp > 0) {
       character.showStatus();
-      stdout.write('행동을 선택하세요 (1: 공격, 2: 방어): \n');
+      monster.showStatus();
+      stdout.write('행동을 선택하세요 (1: 공격, 2: 방어, 3: 아이템 사용): \n');
       String? input = stdin.readLineSync();
 
       if (input == '1') {
-        character.attackMonster(monster);
+        character.attackMonster(monster); // 기본 공격
+        if (monster.hp > 0) {
+          monster.attackCharacter(character); // 몬스터가 반격
+        }
       } else if (input == '2') {
         int damage = monster.attack - character.defense;
         if (damage < 0) damage = 0;
         character.defend(damage);
+      } else if (input == '3') {
+        character.useItem();
+        character.attackMonster(monster);
+        if (monster.hp > 0) {
+          monster.attackCharacter(character);
+        }
       } else {
         print('잘못된 입력입니다.');
         continue;
-      }
-
-      if (monster.hp > 0) {
-        monster.attackCharacter(character);
       }
     }
 
@@ -110,15 +116,17 @@ class Game {
   void startGame() {
     loadCharacterStats();
     loadMonsterStats();
+    grantBonusHealth(); // 30% 확률 보너스 체력
+    final totalMonsterCount = monsters.length;
 
-    while (character.hp > 0 && defeatedCount < monsters.length) {
+    while (character.hp > 0 && defeatedCount < totalMonsterCount) {
       battle();
 
       if (character.hp <= 0) {
         break;
       }
 
-      if (defeatedCount >= monsters.length) {
+      if (defeatedCount >= totalMonsterCount) {
         print('🎊 모든 몬스터를 물리쳤습니다! 게임 승리!');
         break;
       }
@@ -130,5 +138,13 @@ class Game {
 
     saveResult();
     print('게임이 종료되었습니다.');
+  }
+
+  void grantBonusHealth() {
+    final rand = Random();
+    if (rand.nextInt(100) < 30) {
+      character.hp += 10;
+      print('보너스 체력을 얻었습니다! 현재 체력: ${character.hp}');
+    }
   }
 }

@@ -13,6 +13,16 @@ class Monster extends Unit {
     print('$name이(가) ${character.name}을(를) 공격합니다! 데미지: $damage');
   }
 
+  int turnCount = 0;
+
+  void checkAndIncreaseDefense() {
+    turnCount++;
+    if (turnCount % 3 == 0) {
+      defense += 2;
+      print('🛡️ $name의 방어력이 증가했습니다! 현재 방어력: $defense');
+    }
+  }
+
   @override
   void showStatus() {
     print('[몬스터: $name] HP: $hp | ATK: $attack');
