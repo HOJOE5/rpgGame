@@ -12,16 +12,17 @@ in `lib/`, and example unit test in `test/`.
 
 rpg_game/
 ├── bin/
-│ └── main.dart # 프로그램 진입점
+│   └── main.dart         # 프로그램 진입점
 ├── lib/
-│ ├── character.dart # 캐릭터 클래스
-│ ├── monster.dart # 몬스터 클래스
-│ ├── unit.dart # 추상 클래스 Unit
-│ └── game.dart # 게임 전체 로직
-├── characters.txt # 캐릭터 기본 능력치
-├── monsters.txt # 몬스터 리스트 (이름, HP, ATK)
-├── result.txt # 게임 결과 저장 파일
-└── README.md # 프로젝트 설명
+│   ├── character.dart    # 캐릭터 클래스
+│   ├── monster.dart      # 몬스터 클래스
+│   ├── unit.dart         # 추상 클래스 Unit
+│   └── game.dart         # 게임 전체 로직
+├── characters.txt        # 캐릭터 기본 능력치
+├── monsters.txt          # 몬스터 리스트 (이름, HP, ATK)
+├── result.txt            # 게임 결과 저장 파일
+└── README.md             # 프로젝트 설명
+
 
 
 ---
